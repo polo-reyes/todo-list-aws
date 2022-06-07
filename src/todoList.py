@@ -14,15 +14,14 @@ def get_table(dynamodb=None):
             if URL:
                 print('URL dynamoDB:'+URL)
                 boto3.client = functools.partial(boto3.client, endpoint_url=URL)
-                boto3.resource = functools.partial(boto3.resource,
-                                                endpoint_url=URL)
+                boto3.resource = functools.partial(boto3.resource, endpoint_url=URL)
             dynamodb = boto3.resource("dynamodb")
         # fetch todo from the database
         table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
-        print('Result getTable:'+ table.name)
+        print('Result getTable:' + table.name)
         return table
 
 
