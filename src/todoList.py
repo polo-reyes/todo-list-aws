@@ -8,17 +8,24 @@ from botocore.exceptions import ClientError
 
 
 def get_table(dynamodb=None):
-    if not dynamodb:
-        URL = os.environ['ENDPOINT_OVERRIDE']
-        if URL:
-            print('URL dynamoDB:'+URL)
-            boto3.client = functools.partial(boto3.client, endpoint_url=URL)
-            boto3.resource = functools.partial(boto3.resource,
-                                               endpoint_url=URL)
-        dynamodb = boto3.resource("dynamodb")
-    # fetch todo from the database
-    table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
-    return table
+    try:
+        if not dynamodb:
+            URL = os.environ['ENDPOINT_OVERRIDE']
+            if URL:
+                print('URL dynamoDB:'+URL)
+                boto3.client = functools.partial(boto3.client, endpoint_url=URL)
+                boto3.resource = functools.partial(boto3.resource,
+                                                endpoint_url=URL)
+            dynamodb = boto3.resource("dynamodb")
+        # fetch todo from the database
+        table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+    else:
+        print('Result getTable:'+table)
+        #if 'Item' in result:
+            #return result['Item']
+        return table
 
 
 def get_item(key, dynamodb=None):
@@ -40,9 +47,17 @@ def get_item(key, dynamodb=None):
 
 def get_items(dynamodb=None):
     table = get_table(dynamodb)
-    # fetch todo from the database
-    result = table.scan()
-    return result['Items']
+    try:
+        # fetch todo from the database
+        result = table.scan()
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+    else:
+        print('Result getItem:'+str(result))
+        #if 'Item' in result:
+            #return result['Item']
+
+        return result['Items']
 
 
 def put_item(text, dynamodb=None):
@@ -141,8 +156,14 @@ def create_todo_table(dynamodb):
     )
 
     # Wait until the table exists.
-    table.meta.client.get_waiter('table_exists').wait(TableName=tableName)
-    if (table.table_status != 'ACTIVE'):
-        raise AssertionError()
-
-    return table
+    try:
+        table.meta.client.get_waiter('table_exists').wait(TableName=tableName)
+        if (table.table_status != 'ACTIVE'):
+            raise AssertionError()
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+    else:
+        print('Result getItem:'+str(result))
+        #if 'Item' in result:
+            #return result['Item']
+        return table
