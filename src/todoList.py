@@ -30,7 +30,6 @@ def get_table(dynamodb=None):
         print('Result getTable:' + table.name)
         return table
 
-
 def get_item(key, dynamodb=None):
     try:
         table = get_table(dynamodb)    
