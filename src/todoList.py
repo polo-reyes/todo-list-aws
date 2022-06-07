@@ -30,15 +30,15 @@ def get_table(dynamodb=None):
         print('Result getTable:' + table.name)
         return table
 
+
 def get_item(key, dynamodb=None):
     try:
-        table = get_table(dynamodb)    
+        table = get_table(dynamodb)
         result = table.get_item(
             Key={
                 'id': key
             }
         )
-
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
@@ -49,7 +49,7 @@ def get_item(key, dynamodb=None):
 
 def get_items(dynamodb=None):
     try:
-        table = get_table(dynamodb)    
+        table = get_table(dynamodb)
         result = table.scan()
     except ClientError as e:
         print(e.response['Error']['Message'])
@@ -77,7 +77,6 @@ def put_item(text, dynamodb=None):
             "statusCode": 200,
             "body": json.dumps(item)
         }
-
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
@@ -106,7 +105,6 @@ def update_item(key, text, checked, dynamodb=None):
                              'updatedAt = :updatedAt',
             ReturnValues='ALL_NEW',
         )
-
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
@@ -122,7 +120,6 @@ def delete_item(key, dynamodb=None):
                 'id': key
             }
         )
-
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
