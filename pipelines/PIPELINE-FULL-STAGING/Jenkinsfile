@@ -12,8 +12,8 @@ pipeline {
             steps{
                 echo 'Static program analysis:'
                 sh "bash pipelines/PIPELINE-FULL-STAGING/static_test.sh"
-                echo 'Unit testing:'
-                sh "bash pipelines/PIPELINE-FULL-STAGING/unit_test.sh"
+                //echo 'Unit testing:'
+                //sh "bash pipelines/PIPELINE-FULL-STAGING/unit_test.sh"
             }
             post {
                 always {
