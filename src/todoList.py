@@ -46,7 +46,6 @@ def get_item(key, dynamodb=None):
 def get_items(dynamodb=None):
     table = get_table(dynamodb)
     try:
-        # fetch todo from the database
         result = table.scan()
     except ClientError as e:
         print(e.response['Error']['Message'])
