@@ -4,7 +4,6 @@ pipeline {
         
         stage('SetUp'){
             steps{
-                sh "mvn clean cobertura:cobertura"
                 echo 'Setup Virtualenv for testing'
                 sh "bash pipelines/PIPELINE-FULL-STAGING/setup.sh"
             }
