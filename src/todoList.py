@@ -33,8 +33,7 @@ def get_table(dynamodb=None):
 
 def get_item(key, dynamodb=None):
     try:
-        table = get_table(dynamodb)
-    
+        table = get_table(dynamodb)    
         result = table.get_item(
             Key={
                 'id': key
@@ -51,8 +50,7 @@ def get_item(key, dynamodb=None):
 
 def get_items(dynamodb=None):
     try:
-        table = get_table(dynamodb)
-    
+        table = get_table(dynamodb)    
         result = table.scan()
     except ClientError as e:
         print(e.response['Error']['Message'])
@@ -72,8 +70,7 @@ def put_item(text, dynamodb=None):
             'checked': False,
             'createdAt': timestamp,
             'updatedAt': timestamp,
-        }
-   
+        }   
         # write the todo to the database
         table.put_item(Item=item)
         # create a response
@@ -92,8 +89,7 @@ def update_item(key, text, checked, dynamodb=None):
     try:
         table = get_table(dynamodb)
         timestamp = int(time.time() * 1000)
-        # update the todo in the database
-    
+        # update the todo in the database    
         result = table.update_item(
             Key={
                 'id': key
@@ -121,8 +117,7 @@ def update_item(key, text, checked, dynamodb=None):
 def delete_item(key, dynamodb=None):
     try:
         table = get_table(dynamodb)
-        # delete the todo from the database
-    
+        # delete the todo from the database    
         table.delete_item(
             Key={
                 'id': key
@@ -159,7 +154,6 @@ def create_todo_table(dynamodb):
                 'WriteCapacityUnits': 1
             }
         )
-
     # Wait until the table exists.   
         table.meta.client.get_waiter('table_exists').wait(TableName=tableName)
         if (table.table_status != 'ACTIVE'):
