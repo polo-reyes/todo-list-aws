@@ -22,7 +22,7 @@ def get_table(dynamodb=None):
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
-        print('Result getTable:'+table.name)
+        print('Result getTable:'+ table.name)
         return table
 
 
@@ -38,7 +38,7 @@ def get_item(key, dynamodb=None):
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
-        print('Result getItem:'+str(result))
+        print('Result getItem:' + str(result))
         if 'Item' in result:
             return result['Item']
 
@@ -50,7 +50,7 @@ def get_items(dynamodb=None):
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
-        print('Result getItem:'+str(result))
+        print('Result getItem:' + str(result))
         return result['Items']
 
 
@@ -157,5 +157,5 @@ def create_todo_table(dynamodb):
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
-        print('Result getItem:'+table.name)
+        print('Result getItem:' + table.name)
         return table
