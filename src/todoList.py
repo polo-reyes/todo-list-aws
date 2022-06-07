@@ -32,8 +32,9 @@ def get_table(dynamodb=None):
 
 
 def get_item(key, dynamodb=None):
-    table = get_table(dynamodb)
     try:
+        table = get_table(dynamodb)
+    
         result = table.get_item(
             Key={
                 'id': key
@@ -49,8 +50,9 @@ def get_item(key, dynamodb=None):
 
 
 def get_items(dynamodb=None):
-    table = get_table(dynamodb)
     try:
+        table = get_table(dynamodb)
+    
         result = table.scan()
     except ClientError as e:
         print(e.response['Error']['Message'])
@@ -60,17 +62,18 @@ def get_items(dynamodb=None):
 
 
 def put_item(text, dynamodb=None):
-    table = get_table(dynamodb)
-    timestamp = str(time.time())
-    print('Table name:' + table.name)
-    item = {
-        'id': str(uuid.uuid1()),
-        'text': text,
-        'checked': False,
-        'createdAt': timestamp,
-        'updatedAt': timestamp,
-    }
     try:
+        table = get_table(dynamodb)
+        timestamp = str(time.time())
+        print('Table name:' + table.name)
+        item = {
+            'id': str(uuid.uuid1()),
+            'text': text,
+            'checked': False,
+            'createdAt': timestamp,
+            'updatedAt': timestamp,
+        }
+   
         # write the todo to the database
         table.put_item(Item=item)
         # create a response
@@ -86,10 +89,11 @@ def put_item(text, dynamodb=None):
 
 
 def update_item(key, text, checked, dynamodb=None):
-    table = get_table(dynamodb)
-    timestamp = int(time.time() * 1000)
-    # update the todo in the database
     try:
+        table = get_table(dynamodb)
+        timestamp = int(time.time() * 1000)
+        # update the todo in the database
+    
         result = table.update_item(
             Key={
                 'id': key
@@ -115,9 +119,10 @@ def update_item(key, text, checked, dynamodb=None):
 
 
 def delete_item(key, dynamodb=None):
-    table = get_table(dynamodb)
-    # delete the todo from the database
     try:
+        table = get_table(dynamodb)
+        # delete the todo from the database
+    
         table.delete_item(
             Key={
                 'id': key
@@ -131,31 +136,31 @@ def delete_item(key, dynamodb=None):
 
 
 def create_todo_table(dynamodb):
-    # For unit testing
-    tableName = os.environ['DYNAMODB_TABLE']
-    print('Creating Table with name:' + tableName)
-    table = dynamodb.create_table(
-        TableName=tableName,
-        KeySchema=[
-            {
-                'AttributeName': 'id',
-                'KeyType': 'HASH'
-            }
-        ],
-        AttributeDefinitions=[
-            {
-                'AttributeName': 'id',
-                'AttributeType': 'S'
-            }
-        ],
-        ProvisionedThroughput={
-            'ReadCapacityUnits': 1,
-            'WriteCapacityUnits': 1
-        }
-    )
-
-    # Wait until the table exists.
     try:
+        # For unit testing
+        tableName = os.environ['DYNAMODB_TABLE']
+        print('Creating Table with name:' + tableName)
+        table = dynamodb.create_table(
+            TableName=tableName,
+            KeySchema=[
+                {
+                    'AttributeName': 'id',
+                    'KeyType': 'HASH'
+                }
+            ],
+            AttributeDefinitions=[
+                {
+                    'AttributeName': 'id',
+                    'AttributeType': 'S'
+                }
+            ],
+            ProvisionedThroughput={
+                'ReadCapacityUnits': 1,
+                'WriteCapacityUnits': 1
+            }
+        )
+
+    # Wait until the table exists.   
         table.meta.client.get_waiter('table_exists').wait(TableName=tableName)
         if (table.table_status != 'ACTIVE'):
             raise AssertionError()
