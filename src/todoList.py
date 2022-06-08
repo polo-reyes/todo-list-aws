@@ -28,7 +28,7 @@ def get_table(dynamodb=None):
         print(e.response['Error']['Message'])
         table = None
     else:
-        print('Result getTable:' + table.name)  
+        print('Result getTable:' + table.name)
     return table
 
 
