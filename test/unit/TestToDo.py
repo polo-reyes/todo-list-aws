@@ -52,23 +52,21 @@ class TestDatabaseFunctions(unittest.TestCase):
             print ('Table deleted succesfully')
             #self.table_local.delete()
             self.dynamodb = None
-            print ('End: tearDown')
+        print ('End: tearDown')
 
     def test_table_exists(self):
         print ('---------------------')
         print ('Start: test_table_exists')
         #self.assertTrue(self.table)  # check if we got a result
         #self.assertTrue(self.table_local)  # check if we got a result
-
         print('Table name:' + self.table.name)
         try:
             tableName = os.environ['DYNAMODB_TABLE'];
             # check if the table name is 'ToDo'
             self.assertIn(tableName, self.table.name)
         except ClientError as e:
-            print(e.response['Error']['Message'])
-        else:
-            print ('End: test_table_exists')
+            print(e.response['Error']['Message'])        
+        print ('End: test_table_exists')
         
 
     def test_put_todo(self):
@@ -84,8 +82,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             self.assertEqual(200, response['statusCode'])
         except ClientError as e:
             print(e.response['Error']['Message'])
-        else:
-            print ('End: test_put_todo')
+        print ('End: test_put_todo')
 
     def test_put_todo_error(self):
         print ('---------------------')
@@ -99,8 +96,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             self.assertRaises(Exception, put_item("", self.dynamodb))
         except ClientError as e:
             print(e.response['Error']['Message'])
-        else:
-            print ('End: test_put_todo_error')
+        print ('End: test_put_todo_error')
 
     def test_get_todo(self):
         print ('---------------------')
@@ -124,8 +120,7 @@ class TestDatabaseFunctions(unittest.TestCase):
                 responseGet['text'])
         except ClientError as e:
             print(e.response['Error']['Message'])
-        else:
-            print ('End: test_get_todo')
+        print ('End: test_get_todo')
     
     def test_list_todo(self):
         print ('---------------------')
@@ -142,8 +137,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             self.assertTrue(result[0]['text'] == self.text)
         except ClientError as e:
             print(e.response['Error']['Message'])
-        else:
-            print ('End: test_list_todo')
+        print ('End: test_list_todo')
 
 
     def test_update_todo(self):
@@ -165,8 +159,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             self.assertEqual(result['text'], updated_text)
         except ClientError as error:
             print(error.response['Error']['Message'])
-        else:
-            print ('End: test_update_todo')
+        print ('End: test_update_todo')
 
 
     def test_update_todo_error(self):
@@ -202,8 +195,7 @@ class TestDatabaseFunctions(unittest.TestCase):
                     self.dynamodb))
         except ClientError as e:
             print(e.response['Error']['Message'])
-        else:
-            print ('End: atest_update_todo_error')
+        print ('End: atest_update_todo_error')
 
     def test_delete_todo(self):
         print ('---------------------')
@@ -222,8 +214,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             self.assertTrue(len(get_items(self.dynamodb)) == 0)
         except ClientError as e:
             print(e.response['Error']['Message'])
-        else:
-            print ('End: test_delete_todo')
+        print ('End: test_delete_todo')
 
     def test_delete_todo_error(self):
         print ('---------------------')
@@ -235,9 +226,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             self.assertRaises(TypeError, delete_item("", self.dynamodb))
         except ClientError as e:
             print(e.response['Error']['Message'])
-        else:
-            print ('End: test_delete_todo_error')
-
+        print ('End: test_delete_todo_error')
 
 
 if __name__ == '__main__':
