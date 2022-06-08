@@ -1,5 +1,4 @@
 import os
-import unittest
 import boto3
 import time
 import uuid
@@ -78,14 +77,12 @@ def put_item(text, dynamodb=None):
             "statusCode": 200,
             "body": json.dumps(item)
         }    
-        assertEqual(
-            response.status_code, 200, "Error en la petición API a {url}"
-        )
-        assertTrue(response.json())
+        assert response.status_code==200, f"Error en la petición API a {url}"        
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
-        return response
+        assert response.json()==True
+            return response
 
 
 def update_item(key, text, checked, dynamodb=None):
