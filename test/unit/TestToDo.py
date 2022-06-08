@@ -69,7 +69,23 @@ class TestDatabaseFunctions(unittest.TestCase):
         print ('End: test_table_exists')
     
     
-    def test_get_table(self):
+    def test_table_exists_error(self):
+        print ('---------------------')
+        print ('Start: test_table_exists')
+        #self.assertTrue(self.table)  # check if we got a result
+        #self.assertTrue(self.table_local)  # check if we got a result
+        print('Table name:' + self.table.name)
+        try:
+            from src.todoList import get_table
+            tableName = os.environ['DYNAMODB_TABLE'];
+            # check if the table name is 'ToDo'
+            self.assertIn(tableName, get_table())
+        except ClientError as e:
+            print(e.response['Error']['Message'])        
+        print ('End: test_table_exists')
+        
+    
+    def test_get_table_name_error(self):
         print ('---------------------')
         print ('Start: test_put_todo')
         # Testing file functions
