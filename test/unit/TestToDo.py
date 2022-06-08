@@ -1,5 +1,5 @@
 # from pprint import pprint
-from asyncio.windows_events import NULL
+from asyncio.windows_events import None
 from curses.ascii import NUL
 import unittest
 import warnings
@@ -79,7 +79,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         print('Table name:' + self.table.name)
         try:
             from src.todoList import get_table            
-            self.assertRaises(Exception, get_table(NULL))
+            self.assertRaises(Exception, get_table(None))
             self.assertRaises(Exception, get_table("Polo"))
         except ClientError as e:
             print(e.response['Error']['Message'])        
@@ -93,7 +93,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         #self.assertTrue(self.table_local)  # check if we got a result
         try:
             from src.todoList import create_todo_table
-            tableName = create_todo_table(NULL);
+            tableName = create_todo_table(None);
             self.assertEqual('INACTIVE',tableName.table_status)
         except ClientError as e:
             print(e.response['Error']['Message'])        
@@ -107,7 +107,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         try:
             from src.todoList import create_todo_table
 
-            self.assertRaises(Exception, create_todo_table(NULL))
+            self.assertRaises(Exception, create_todo_table(None))
         except ClientError as e:
             print(e.response['Error']['Message'])
         print ('End: test_create_table_todo_error')
@@ -121,7 +121,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             from src.todoList import create_todo_table, get_table
 
             # Table local
-            tableName=create_todo_table(NULL)
+            tableName=create_todo_table(None)
             print ('Table Name:' + tableName)
             self.assertRaises(Exception, get_table())
         except ClientError as e:
@@ -151,7 +151,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             from src.todoList import put_item
 
             # Table mock
-            self.assertRaises(Exception, put_item("", NULL))
+            self.assertRaises(Exception, put_item("", None))
             self.assertRaises(Exception, put_item("", self.dynamodb))
         except ClientError as e:
             print(e.response['Error']['Message'])
