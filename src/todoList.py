@@ -26,9 +26,9 @@ def get_table(dynamodb=None):
         table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
     except ClientError as e:
         print(e.response['Error']['Message'])
-        table=None
+        table = None
     else:
-        print('Result getTable:' + table.name)        
+        print('Result getTable:' + table.name)  
     return table
 
 
@@ -42,7 +42,7 @@ def get_item(key, dynamodb=None):
         )
     except ClientError as e:
         print(e.response['Error']['Message'])
-        result['Item']=None
+        result['Item'] = None
     else:
         print('Result getItem:' + str(result))
     return result['Item']
@@ -54,7 +54,7 @@ def get_items(dynamodb=None):
         result = table.scan()
     except ClientError as e:
         print(e.response['Error']['Message'])
-        result['Items']=None
+        result['Items'] = None
     else:
         print('Result getItem:' + str(result))
     return result['Items']
@@ -108,7 +108,7 @@ def update_item(key, text, checked, dynamodb=None):
         )
     except ClientError as e:
         print(e.response['Error']['Message'])
-        result['Attributes']=None
+        result['Attributes'] = None
     return result['Attributes']
 
 
