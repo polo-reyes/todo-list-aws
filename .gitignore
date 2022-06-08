@@ -5,3 +5,5 @@ tests
 pyenvunittests
 .coverage
 coverage.xml
+.vscode/settings.json
+cov.xml
