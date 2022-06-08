@@ -76,12 +76,12 @@ def put_item(text, dynamodb=None):
         response = {
             "statusCode": 200,
             "body": json.dumps(item)
-        }    
-        assert response.status_code==200, f"Error en la petición API a {url}"        
+        }
+        assert response.status_code == 200, f"Error en la petición API a {url}"   
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
-        assert response.json()==True
+        assert response.json() == True
         return response
 
 
