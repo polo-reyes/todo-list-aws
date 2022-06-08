@@ -79,6 +79,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             from src.todoList import get_table            
             self.assertRaises(Exception, get_table(None))
             self.assertRaises(Exception, get_table("Polo"))
+            self.assertIn(get_table("Polo"), self.table.name)
         except ClientError as e:
             print(e.response['Error']['Message'])        
         print ('End: test_table_exists_error')
@@ -119,7 +120,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             from src.todoList import create_todo_table, get_table
 
             # Table local
-            tableName=create_todo_table(dynamodb=None)
+            tableName=create_todo_table(None)
             print ('Table Name:' + tableName)
             self.assertRaises(Exception, get_table())
         except ClientError as e:
@@ -151,6 +152,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             # Table mock
             self.assertRaises(Exception, put_item("", None))
             self.assertRaises(Exception, put_item("", self.dynamodb))
+            self.assertRaises(Exception, put_item("", dynamodb=None))
         except ClientError as e:
             print(e.response['Error']['Message'])
         print ('End: test_put_todo_error')
