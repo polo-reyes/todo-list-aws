@@ -120,9 +120,9 @@ class TestDatabaseFunctions(unittest.TestCase):
             from src.todoList import get_table
 
             # Table local
-            tableName = get_table()
+            tableName = get_table(self.dynamodb)
             print ('Table Name:' + tableName)
-            self.assertEqual('Polo', tableName)
+            self.assertRaises(Exception, get_table(""))
         except ClientError as e:
             print(e.response['Error']['Message'])
         print ('End: test_get_table_name_error')   
