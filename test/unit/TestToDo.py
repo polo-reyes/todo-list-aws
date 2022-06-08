@@ -91,7 +91,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         #self.assertTrue(self.table_local)  # check if we got a result
         try:
             from src.todoList import create_todo_table
-            tableName = create_todo_table();
+            tableName = create_todo_table('');
             self.assertEqual('INACTIVE',tableName.table_status)
         except ClientError as e:
             print(e.response['Error']['Message'])        
@@ -120,7 +120,6 @@ class TestDatabaseFunctions(unittest.TestCase):
             from src.todoList import get_table
 
             # Table local
-            tableName = get_table(self.dynamodb)
             print ('Table Name:' + tableName)
             self.assertRaises(Exception, get_table(""))
         except ClientError as e:
