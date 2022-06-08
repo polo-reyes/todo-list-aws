@@ -11,7 +11,6 @@ import pytest
 BASE_URL = "https://gnx01c4xy3.execute-api.us-east-1.amazonaws.com/Prod"
 DEFAULT_TIMEOUT = 2  # in secs
 
-
 @pytest.mark.api
 class TestApi(unittest.TestCase):
     
