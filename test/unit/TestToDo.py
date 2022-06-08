@@ -78,6 +78,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         try:
             from src.todoList import get_table            
             self.assertRaises(Exception, get_table(""))
+            self.assertRaises(Exception, get_table("Polo"))
         except ClientError as e:
             print(e.response['Error']['Message'])        
         print ('End: test_table_exists_error')
