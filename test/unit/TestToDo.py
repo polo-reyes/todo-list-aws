@@ -93,8 +93,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         try:
             from src.todoList import create_todo_table
             tableName = create_todo_table();
-            tableName.table_status = 'INACTIVE'
-            self.assertEqual(tableName.table_status, 'ACTIVE')
+            self.assertEqual('INACTIVE',tableName.table_status)
         except ClientError as e:
             print(e.response['Error']['Message'])        
         print ('End: test_create_table_error')
