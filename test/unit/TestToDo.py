@@ -97,6 +97,20 @@ class TestDatabaseFunctions(unittest.TestCase):
         except ClientError as e:
             print(e.response['Error']['Message'])        
         print ('End: test_create_table_error')
+        
+    
+    def test_create_table_todo_error(self):
+        print ('---------------------')
+        print ('Start: test_create_table_todo_error')
+        # Testing file functions
+        try:
+            from src.todoList import create_todo_table
+
+            self.assertRaises(Exception, create_todo_table(""))
+            self.assertRaises(Exception, create_todo_table(""))
+        except ClientError as e:
+            print(e.response['Error']['Message'])
+        print ('End: test_create_table_todo_error')
     
     
     def test_get_table_name_error(self):
