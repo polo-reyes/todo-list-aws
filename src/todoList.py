@@ -81,7 +81,7 @@ def put_item(text, dynamodb=None):
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
-        assert all (response.json())
+        assert all(response.json())
         return response
 
 
