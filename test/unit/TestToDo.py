@@ -67,7 +67,22 @@ class TestDatabaseFunctions(unittest.TestCase):
         except ClientError as e:
             print(e.response['Error']['Message'])        
         print ('End: test_table_exists')
-        
+    
+    
+    def test_get_table(self):
+        print ('---------------------')
+        print ('Start: test_put_todo')
+        # Testing file functions
+        try:
+            from src.todoList import get_table
+
+            # Table local
+            tableName = get_table()
+            print ('Table Name:' + tableName)
+            self.assertEqual('Polo', tableName)
+        except ClientError as e:
+            print(e.response['Error']['Message'])
+        print ('End: test_put_todo')   
 
     def test_put_todo(self):
         print ('---------------------')
