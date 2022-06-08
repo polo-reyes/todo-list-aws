@@ -82,7 +82,7 @@ def put_item(text, dynamodb=None):
         print(e.response['Error']['Message'])
     else:
         assert response.json()==True
-            return response
+        return response
 
 
 def update_item(key, text, checked, dynamodb=None):
