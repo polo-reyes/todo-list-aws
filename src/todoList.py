@@ -28,7 +28,8 @@ def get_table(dynamodb=None):
         print(e.response['Error']['Message'])
     else:
         print('Result getTable:' + table.name)
-        return table
+        if (table.name!=''):
+            return table
 
 
 def get_item(key, dynamodb=None):
@@ -55,7 +56,8 @@ def get_items(dynamodb=None):
         print(e.response['Error']['Message'])
     else:
         print('Result getItem:' + str(result))
-        return result['Items']
+        if 'Items' in result:
+            return result['Items']
 
 
 def put_item(text, dynamodb=None):
@@ -79,8 +81,7 @@ def put_item(text, dynamodb=None):
         }
     except ClientError as e:
         print(e.response['Error']['Message'])
-    else:
-        return response
+    return response
 
 
 def update_item(key, text, checked, dynamodb=None):
@@ -108,7 +109,8 @@ def update_item(key, text, checked, dynamodb=None):
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
-        return result['Attributes']
+        if 'Attributes' in result:
+            return result['Attributes']
 
 
 def delete_item(key, dynamodb=None):
@@ -122,8 +124,7 @@ def delete_item(key, dynamodb=None):
         )
     except ClientError as e:
         print(e.response['Error']['Message'])
-    else:
-        return
+    return
 
 
 def create_todo_table(dynamodb):
@@ -158,4 +159,4 @@ def create_todo_table(dynamodb):
         print(e.response['Error']['Message'])
     else:
         print('Result getItem:' + table.name)
-        return table
+    return table
