@@ -71,7 +71,7 @@ class TestDatabaseFunctions(unittest.TestCase):
     
     def test_table_exists_error(self):
         print ('---------------------')
-        print ('Start: test_table_exists')
+        print ('Start: test_table_exists_error')
         #self.assertTrue(self.table)  # check if we got a result
         #self.assertTrue(self.table_local)  # check if we got a result
         print('Table name:' + self.table.name)
@@ -82,12 +82,27 @@ class TestDatabaseFunctions(unittest.TestCase):
             self.assertIn(tableName, get_table())
         except ClientError as e:
             print(e.response['Error']['Message'])        
-        print ('End: test_table_exists')
+        print ('End: test_table_exists_error')
         
+    
+    def test_create_table_error(self):
+        print ('---------------------')
+        print ('Start: test_create_table_error')
+        #self.assertTrue(self.table)  # check if we got a result
+        #self.assertTrue(self.table_local)  # check if we got a result
+        try:
+            from src.todoList import create_todo_table
+            tableName = create_todo_table();
+            tableName.table_status = 'INACTIVE'
+            self.assertEqual(tableName.table_status, 'ACTIVE'')
+        except ClientError as e:
+            print(e.response['Error']['Message'])        
+        print ('End: test_create_table_error')
+    
     
     def test_get_table_name_error(self):
         print ('---------------------')
-        print ('Start: test_put_todo')
+        print ('Start: test_get_table_name_error')
         # Testing file functions
         try:
             from src.todoList import get_table
@@ -98,7 +113,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             self.assertEqual('Polo', tableName)
         except ClientError as e:
             print(e.response['Error']['Message'])
-        print ('End: test_put_todo')   
+        print ('End: test_get_table_name_error')   
 
     def test_put_todo(self):
         print ('---------------------')
