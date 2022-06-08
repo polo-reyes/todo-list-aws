@@ -1,6 +1,4 @@
 # from pprint import pprint
-from asyncio.windows_events import None
-from curses.ascii import NUL
 import unittest
 import warnings
 import json
@@ -121,7 +119,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             from src.todoList import create_todo_table, get_table
 
             # Table local
-            tableName=create_todo_table(None)
+            tableName=create_todo_table(dynamodb=None)
             print ('Table Name:' + tableName)
             self.assertRaises(Exception, get_table())
         except ClientError as e:
