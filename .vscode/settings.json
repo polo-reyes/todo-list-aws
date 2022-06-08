@@ -5,13 +5,13 @@
     "python.testing.pytestArgs": [
         "test"
     ],
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": true,
+    "python.testing.pytestEnabled": false,
     "python.testing.unittestArgs": [
         "-v",
         "-s",
-        "./test",
+        "./src",
         "-p",
-        "*test*.py"
+        "*test.py"
     ]
 }
