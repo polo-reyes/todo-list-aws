@@ -77,7 +77,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         print('Table name:' + self.table.name)
         try:
             from src.todoList import get_table            
-            self.assertRaises(Exception, get_table(""))
+            self.assertRaises(Exception, get_table(self.dynamodb))
             self.assertRaises(Exception, get_table("Polo"))
         except ClientError as e:
             print(e.response['Error']['Message'])        
