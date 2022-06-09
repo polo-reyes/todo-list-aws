@@ -78,7 +78,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         print('Table name:' + self.table.name)
         try:
             from src.todoList import get_table            
-            self.assertRaises(Exception, get_table(""))
+            self.assertRaises(Exception, get_table())
             self.assertRaises(Exception, get_table("Polo"))
             self.assertIn(get_table("Polo"), self.table.name)
         except ClientError as e:
@@ -95,6 +95,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             from src.todoList import create_todo_table
             tableName = create_todo_table(self.dynamodb);
             self.assertTrue(tableName)
+            self.assertRaises(Exception, create_todo_table(self.dynamodb))
         except ClientError as e:
             print(e.response['Error']['Message'])        
         print ('End: test_create_table_error')
@@ -139,6 +140,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             response = put_item(self.text, self.dynamodb)
             print ('Response put_item:' + str(response))
             self.assertEqual(200, response['statusCode'])
+            self.assertRaises(Exception, put_item("", self.dynamodb))
         except ClientError as e:
             print(e.response['Error']['Message'])
         print ('End: test_put_todo')
@@ -216,6 +218,7 @@ class TestDatabaseFunctions(unittest.TestCase):
                                 self.dynamodb)
             print ('Result Update Item:' + str(result))
             self.assertEqual(result['text'], updated_text)
+            self.assertRaises(Exception, update_item(idItem, updated_text,"false",self.dynamodb))
         except ClientError as error:
             print(error.response['Error']['Message'])
         print ('End: test_update_todo')
@@ -271,6 +274,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             delete_item(idItem, self.dynamodb)
             print ('Item deleted succesfully')
             self.assertTrue(len(get_items(self.dynamodb)) == 0)
+            self.assertRaises(Exception, delete_item("", self.dynamodb))
         except ClientError as e:
             print(e.response['Error']['Message'])
         print ('End: test_delete_todo')
