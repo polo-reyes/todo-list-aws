@@ -45,14 +45,14 @@ class TestDatabaseFunctions(unittest.TestCase):
         print ('Start: tearDown')
         """Delete mock database and table after test is run"""
         try:
-            self.assertRaises(Exception, self.table.delete(self.table.name))
+            self.table=None
+            self.assertRaises(Exception, self.table.delete())
         except ClientError as e:
             print(e.response['Error']['Message'])
         else:
             print ('Table deleted succesfully')
             #self.table_local.delete()
             self.dynamodb = None
-            self.assertRaises(Exception, self.table.name)
         print ('End: tearDown')
 
     def test_table_exists(self):
@@ -65,6 +65,8 @@ class TestDatabaseFunctions(unittest.TestCase):
             tableName = os.environ['DYNAMODB_TABLE'];
             # check if the table name is 'ToDo'
             self.assertIn(tableName, self.table.name)
+            self.table=None
+            self.assertRaises(Exception, self.table.name)
         except ClientError as e:
             print(e.response['Error']['Message'])        
         print ('End: test_table_exists')
@@ -210,7 +212,7 @@ class TestDatabaseFunctions(unittest.TestCase):
 
     def test_update_todo_error(self):
         print ('---------------------')
-        print ('Start: atest_update_todo_error')
+        print ('Start: test_update_todo_error')
         try:            
             from src.todoList import put_item, update_item
             updated_text = "Aprender más cosas que DevOps y Cloud en la UNIR"
@@ -241,7 +243,7 @@ class TestDatabaseFunctions(unittest.TestCase):
                     self.dynamodb))
         except ClientError as e:
             print(e.response['Error']['Message'])
-        print ('End: atest_update_todo_error')
+        print ('End: test_update_todo_error')
 
     def test_delete_todo(self):
         print ('---------------------')
