@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  todo-list-aws-translate
+
+  Application TODO-LIST with SAM format adding the translate functionality
+
+# Parameters
+Parameters:
+  Stage:
+    Type: String
+    Default: default
+    AllowedValues:
+      - default
+      - staging
+      - production
+    Description: Enter staging or production. Default is default  
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+    Environment:
+      Variables:
+        DYNAMODB_TABLE: !Ref TodosDynamoDbTable
+        ENDPOINT_OVERRIDE: ""
+    
+Resources:
+  
+  TranslateTodoFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: src/
+      Role: !Sub "arn:aws:iam::${AWS::AccountId}:role/LabRole"
+      Handler: translate.translate
+      Runtime: python3.7
+      Events:
+        Create:
+          Type: Api
+          Properties:
+            Path: /todos/{id}/{language}
+            Method: get
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  GetTodoApi:
+    Description: "API Gateway endpoint URL for ${opt:stage} stage for translate TODO"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/todos/{id}/{language}"
