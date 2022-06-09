@@ -45,7 +45,6 @@ class TestDatabaseFunctions(unittest.TestCase):
         print ('Start: tearDown')
         """Delete mock database and table after test is run"""
         try:
-            self.table.delete()
             self.assertRaises(Exception, self.table.delete())
         except ClientError as e:
             print(e.response['Error']['Message'])
