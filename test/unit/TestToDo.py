@@ -78,6 +78,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         print('Table name:' + self.table.name)
         try:
             from src.todoList import get_table            
+            self.assertRaises(Exception, get_table())
             self.assertRaises(Exception, get_table("Polo"))
         except ClientError as e:
             print(e.response['Error']['Message'])        
@@ -117,12 +118,8 @@ class TestDatabaseFunctions(unittest.TestCase):
         print ('Start: test_get_table_name_error')
         # Testing file functions
         try:
-            from src.todoList import create_todo_table, get_table
-
-            # Table local
-            tableName=create_todo_table(self.dynamodb)
-            print ('Table Name:' + tableName)
-            self.assertRaises(Exception, get_table())
+            tableName = os.environ[''];            
+            self.assertRaises(Exception, print ('Table Name:' + tableName))
         except ClientError as e:
             print(e.response['Error']['Message'])
         print ('End: test_get_table_name_error')   
