@@ -20,6 +20,7 @@ class TestApi(unittest.TestCase):
 
     def test_api_listtodos(self):
         print('---------------------------------------')
+        print('***************************************')
         print('Starting - integration test List TODO')
         #Add TODO
         url = BASE_URL+"/todos"
