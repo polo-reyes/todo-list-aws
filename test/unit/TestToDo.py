@@ -98,20 +98,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         except ClientError as e:
             print(e.response['Error']['Message'])        
         print ('End: test_create_table_error')
-        
-    
-    def test_create_table_todo_error(self):
-        print ('---------------------')
-        print ('Start: test_create_table_todo_error')
-        # Testing file functions
-        try:
-            from src.todoList import create_todo_table
-
-            self.assertRaises(Exception, create_todo_table(self.dynamodb))
-        except ClientError as e:
-            print(e.response['Error']['Message'])
-        print ('End: test_create_table_todo_error')
-    
+            
     
     def test_get_table_name_error(self):
         print ('---------------------')
@@ -135,7 +122,6 @@ class TestDatabaseFunctions(unittest.TestCase):
             response = put_item(self.text, self.dynamodb)
             print ('Response put_item:' + str(response))
             self.assertEqual(200, response['statusCode'])
-            self.assertRaises(Exception, put_item("", self.dynamodb))
         except ClientError as e:
             print(e.response['Error']['Message'])
         print ('End: test_put_todo')
@@ -174,6 +160,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             self.assertEqual(
                 self.text,
                 responseGet['text'])
+            self.assertRaises(Exception, put_item("", self.dynamodb))
         except ClientError as e:
             print(e.response['Error']['Message'])
         print ('End: test_get_todo')
@@ -182,7 +169,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         print ('---------------------')
         print ('Start: test_list_todo')
         try:
-            from src.todoList import get_items, put_item
+            from src.todoList import get_items, put_item, get_item
 
             # Testing file functions
             # Table mock
@@ -191,6 +178,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             print ('Response GetItems' + str(result))
             self.assertTrue(len(result) == 1)
             self.assertTrue(result[0]['text'] == self.text)
+            self.assertRaises(Exception, get_item())
         except ClientError as e:
             print(e.response['Error']['Message'])
         print ('End: test_list_todo')
