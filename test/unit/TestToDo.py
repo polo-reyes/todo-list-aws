@@ -45,7 +45,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         print ('Start: tearDown')
         """Delete mock database and table after test is run"""
         try:
-            self.assertRaises(Exception, self.table.delete())
+            self.assertRaises(Exception, self.table.delete(self.table.name))
         except ClientError as e:
             print(e.response['Error']['Message'])
         else:
@@ -78,9 +78,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         print('Table name:' + self.table.name)
         try:
             from src.todoList import get_table            
-            self.assertRaises(Exception, get_table())
             self.assertRaises(Exception, get_table("Polo"))
-            self.assertIn(get_table("Polo"), self.table.name)
         except ClientError as e:
             print(e.response['Error']['Message'])        
         print ('End: test_table_exists_error')
