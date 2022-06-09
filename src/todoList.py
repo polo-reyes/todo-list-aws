@@ -26,7 +26,6 @@ def get_table(dynamodb=None):
         table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
     except ClientError as e:
         print(e.response['Error']['Message'])
-        table = None
     else:
         print('Result getTable:' + table.name)
     return table
@@ -55,7 +54,7 @@ def get_items(dynamodb=None):
         print(e.response['Error']['Message'])
     else:
         print('Result getItem:' + str(result))
-        return result['Items']
+    return result['Items']
 
 
 def put_item(text, dynamodb=None):
