@@ -52,7 +52,7 @@ class TestDatabaseFunctions(unittest.TestCase):
             print ('Table deleted succesfully')
             #self.table_local.delete()
             self.dynamodb = None
-            assert self.dynamodb is None
+            self.assertRaises(Exception, self.table.name)
         print ('End: tearDown')
 
     def test_table_exists(self):
