@@ -1,0 +1,1230 @@
+Started by upstream project "PIPELINE-FULL-CD" build number 5
+originally caused by:
+ Started by user Leopoldo Reyes Carballo
+Obtained pipelines/PIPELINE-FULL-STAGING/Jenkinsfile from git https://github.com/polo-reyes/todo-list-aws.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/PIPELINE-FULL-STAGING
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential 95e31075-3fd5-4464-a980-9f81b88a361c
+Cloning the remote Git repository
+Cloning repository https://github.com/polo-reyes/todo-list-aws.git
+ > git init /var/lib/jenkins/workspace/PIPELINE-FULL-STAGING # timeout=10
+Fetching upstream changes from https://github.com/polo-reyes/todo-list-aws.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.17.1'
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --progress -- https://github.com/polo-reyes/todo-list-aws.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/polo-reyes/todo-list-aws.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/develop^{commit} # timeout=10
+Checking out Revision 8e6bf238777aad53f91f97e4bd7fc9bdf8ac514a (refs/remotes/origin/develop)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 8e6bf238777aad53f91f97e4bd7fc9bdf8ac514a # timeout=10
+Commit message: "changed sshagent(['polo-reyes'] from sshagent(['github']"
+ > git rev-list --no-walk 8e6bf238777aad53f91f97e4bd7fc9bdf8ac514a # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (SetUp)
+[Pipeline] echo
+Setup Virtualenv for testing
+[Pipeline] sh
++ bash pipelines/PIPELINE-FULL-STAGING/setup.sh
++ python3.7 -m venv todo-list-aws
++ source todo-list-aws/bin/activate
+++ deactivate nondestructive
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ '[' -n /bin/bash -o -n '' ']'
+++ hash -r
+++ '[' -n '' ']'
+++ unset VIRTUAL_ENV
+++ '[' '!' nondestructive = nondestructive ']'
+++ VIRTUAL_ENV=/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws
+++ export VIRTUAL_ENV
+++ _OLD_VIRTUAL_PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+++ PATH=/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+++ export PATH
+++ '[' -n '' ']'
+++ '[' -z '' ']'
+++ _OLD_VIRTUAL_PS1=
+++ '[' 'x(todo-list-aws) ' '!=' x ']'
+++ PS1='(todo-list-aws) '
+++ export PS1
+++ '[' -n /bin/bash -o -n '' ']'
+++ hash -r
++ python -m pip install --upgrade pip
+Collecting pip
+  Using cached https://files.pythonhosted.org/packages/96/2f/caec18213f6a67852f6997fb0673ae08d2e93d1b81573edb93ba4ef06970/pip-22.1.2-py3-none-any.whl
+Installing collected packages: pip
+  Found existing installation: pip 9.0.1
+    Uninstalling pip-9.0.1:
+      Successfully uninstalled pip-9.0.1
+Successfully installed pip-22.1.2
++ python -m pip install radon
+Collecting radon
+  Using cached radon-5.1.0-py2.py3-none-any.whl (52 kB)
+Collecting future
+  Using cached future-0.18.2.tar.gz (829 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting colorama>=0.4.1
+  Using cached colorama-0.4.4-py2.py3-none-any.whl (16 kB)
+Collecting mando<0.7,>=0.6
+  Using cached mando-0.6.4-py2.py3-none-any.whl (29 kB)
+Collecting six
+  Using cached six-1.16.0-py2.py3-none-any.whl (11 kB)
+Using legacy 'setup.py install' for future, since package 'wheel' is not installed.
+Installing collected packages: six, future, colorama, mando, radon
+  Running setup.py install for future: started
+  Running setup.py install for future: finished with status 'done'
+Successfully installed colorama-0.4.4 future-0.18.2 mando-0.6.4 radon-5.1.0 six-1.16.0
++ python -m pip install flake8
+Collecting flake8
+  Using cached flake8-4.0.1-py2.py3-none-any.whl (64 kB)
+Collecting importlib-metadata<4.3
+  Using cached importlib_metadata-4.2.0-py3-none-any.whl (16 kB)
+Collecting mccabe<0.7.0,>=0.6.0
+  Using cached mccabe-0.6.1-py2.py3-none-any.whl (8.6 kB)
+Collecting pycodestyle<2.9.0,>=2.8.0
+  Using cached pycodestyle-2.8.0-py2.py3-none-any.whl (42 kB)
+Collecting pyflakes<2.5.0,>=2.4.0
+  Using cached pyflakes-2.4.0-py2.py3-none-any.whl (69 kB)
+Collecting typing-extensions>=3.6.4
+  Using cached typing_extensions-4.2.0-py3-none-any.whl (24 kB)
+Collecting zipp>=0.5
+  Using cached zipp-3.8.0-py3-none-any.whl (5.4 kB)
+Installing collected packages: mccabe, zipp, typing-extensions, pyflakes, pycodestyle, importlib-metadata, flake8
+Successfully installed flake8-4.0.1 importlib-metadata-4.2.0 mccabe-0.6.1 pycodestyle-2.8.0 pyflakes-2.4.0 typing-extensions-4.2.0 zipp-3.8.0
++ python -m pip install flake8-polyfill
+Collecting flake8-polyfill
+  Using cached flake8_polyfill-1.0.2-py2.py3-none-any.whl (7.3 kB)
+Requirement already satisfied: flake8 in ./todo-list-aws/lib/python3.7/site-packages (from flake8-polyfill) (4.0.1)
+Requirement already satisfied: pycodestyle<2.9.0,>=2.8.0 in ./todo-list-aws/lib/python3.7/site-packages (from flake8->flake8-polyfill) (2.8.0)
+Requirement already satisfied: importlib-metadata<4.3 in ./todo-list-aws/lib/python3.7/site-packages (from flake8->flake8-polyfill) (4.2.0)
+Requirement already satisfied: pyflakes<2.5.0,>=2.4.0 in ./todo-list-aws/lib/python3.7/site-packages (from flake8->flake8-polyfill) (2.4.0)
+Requirement already satisfied: mccabe<0.7.0,>=0.6.0 in ./todo-list-aws/lib/python3.7/site-packages (from flake8->flake8-polyfill) (0.6.1)
+Requirement already satisfied: typing-extensions>=3.6.4 in ./todo-list-aws/lib/python3.7/site-packages (from importlib-metadata<4.3->flake8->flake8-polyfill) (4.2.0)
+Requirement already satisfied: zipp>=0.5 in ./todo-list-aws/lib/python3.7/site-packages (from importlib-metadata<4.3->flake8->flake8-polyfill) (3.8.0)
+Installing collected packages: flake8-polyfill
+Successfully installed flake8-polyfill-1.0.2
++ python -m pip install bandit
+Collecting bandit
+  Using cached bandit-1.7.4-py3-none-any.whl (118 kB)
+Collecting stevedore>=1.20.0
+  Using cached stevedore-3.5.0-py3-none-any.whl (49 kB)
+Collecting PyYAML>=5.3.1
+  Using cached PyYAML-6.0-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl (596 kB)
+Collecting GitPython>=1.0.1
+  Using cached GitPython-3.1.27-py3-none-any.whl (181 kB)
+Collecting gitdb<5,>=4.0.1
+  Using cached gitdb-4.0.9-py3-none-any.whl (63 kB)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in ./todo-list-aws/lib/python3.7/site-packages (from GitPython>=1.0.1->bandit) (4.2.0)
+Collecting pbr!=2.1.0,>=2.0.0
+  Using cached pbr-5.9.0-py2.py3-none-any.whl (112 kB)
+Requirement already satisfied: importlib-metadata>=1.7.0 in ./todo-list-aws/lib/python3.7/site-packages (from stevedore>=1.20.0->bandit) (4.2.0)
+Collecting smmap<6,>=3.0.1
+  Using cached smmap-5.0.0-py3-none-any.whl (24 kB)
+Requirement already satisfied: zipp>=0.5 in ./todo-list-aws/lib/python3.7/site-packages (from importlib-metadata>=1.7.0->stevedore>=1.20.0->bandit) (3.8.0)
+Installing collected packages: smmap, PyYAML, pbr, stevedore, gitdb, GitPython, bandit
+Successfully installed GitPython-3.1.27 PyYAML-6.0 bandit-1.7.4 gitdb-4.0.9 pbr-5.9.0 smmap-5.0.0 stevedore-3.5.0
++ python -m pip install pytest
+Collecting pytest
+  Using cached pytest-7.1.2-py3-none-any.whl (297 kB)
+Collecting pluggy<2.0,>=0.12
+  Using cached pluggy-1.0.0-py2.py3-none-any.whl (13 kB)
+Collecting tomli>=1.0.0
+  Using cached tomli-2.0.1-py3-none-any.whl (12 kB)
+Collecting attrs>=19.2.0
+  Using cached attrs-21.4.0-py2.py3-none-any.whl (60 kB)
+Collecting packaging
+  Using cached packaging-21.3-py3-none-any.whl (40 kB)
+Collecting py>=1.8.2
+  Using cached py-1.11.0-py2.py3-none-any.whl (98 kB)
+Requirement already satisfied: importlib-metadata>=0.12 in ./todo-list-aws/lib/python3.7/site-packages (from pytest) (4.2.0)
+Collecting iniconfig
+  Using cached iniconfig-1.1.1-py2.py3-none-any.whl (5.0 kB)
+Requirement already satisfied: zipp>=0.5 in ./todo-list-aws/lib/python3.7/site-packages (from importlib-metadata>=0.12->pytest) (3.8.0)
+Requirement already satisfied: typing-extensions>=3.6.4 in ./todo-list-aws/lib/python3.7/site-packages (from importlib-metadata>=0.12->pytest) (4.2.0)
+Collecting pyparsing!=3.0.5,>=2.0.2
+  Using cached pyparsing-3.0.9-py3-none-any.whl (98 kB)
+Installing collected packages: iniconfig, tomli, pyparsing, py, attrs, pluggy, packaging, pytest
+Successfully installed attrs-21.4.0 iniconfig-1.1.1 packaging-21.3 pluggy-1.0.0 py-1.11.0 pyparsing-3.0.9 pytest-7.1.2 tomli-2.0.1
++ python -m pip install boto3
+Collecting boto3
+  Using cached boto3-1.24.5-py3-none-any.whl (132 kB)
+Collecting botocore<1.28.0,>=1.27.5
+  Using cached botocore-1.27.5-py3-none-any.whl (8.9 MB)
+Collecting jmespath<2.0.0,>=0.7.1
+  Using cached jmespath-1.0.0-py3-none-any.whl (23 kB)
+Collecting s3transfer<0.7.0,>=0.6.0
+  Using cached s3transfer-0.6.0-py3-none-any.whl (79 kB)
+Collecting urllib3<1.27,>=1.25.4
+  Using cached urllib3-1.26.9-py2.py3-none-any.whl (138 kB)
+Collecting python-dateutil<3.0.0,>=2.1
+  Using cached python_dateutil-2.8.2-py2.py3-none-any.whl (247 kB)
+Requirement already satisfied: six>=1.5 in ./todo-list-aws/lib/python3.7/site-packages (from python-dateutil<3.0.0,>=2.1->botocore<1.28.0,>=1.27.5->boto3) (1.16.0)
+Installing collected packages: urllib3, python-dateutil, jmespath, botocore, s3transfer, boto3
+Successfully installed boto3-1.24.5 botocore-1.27.5 jmespath-1.0.0 python-dateutil-2.8.2 s3transfer-0.6.0 urllib3-1.26.9
++ python -m pip install moto
+Collecting moto
+  Using cached moto-3.1.12-py3-none-any.whl (1.8 MB)
+Collecting xmltodict
+  Using cached xmltodict-0.13.0-py2.py3-none-any.whl (10.0 kB)
+Collecting responses>=0.9.0
+  Using cached responses-0.21.0-py3-none-any.whl (45 kB)
+Collecting pytz
+  Using cached pytz-2022.1-py2.py3-none-any.whl (503 kB)
+Collecting MarkupSafe!=2.0.0a1
+  Using cached MarkupSafe-2.1.1-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (25 kB)
+Requirement already satisfied: botocore>=1.12.201 in ./todo-list-aws/lib/python3.7/site-packages (from moto) (1.27.5)
+Collecting cryptography>=3.3.1
+  Using cached cryptography-37.0.2-cp36-abi3-manylinux_2_24_x86_64.whl (4.0 MB)
+Requirement already satisfied: python-dateutil<3.0.0,>=2.1 in ./todo-list-aws/lib/python3.7/site-packages (from moto) (2.8.2)
+Requirement already satisfied: boto3>=1.9.201 in ./todo-list-aws/lib/python3.7/site-packages (from moto) (1.24.5)
+Collecting requests>=2.5
+  Using cached requests-2.27.1-py2.py3-none-any.whl (63 kB)
+Collecting Jinja2>=2.10.1
+  Using cached Jinja2-3.1.2-py3-none-any.whl (133 kB)
+Collecting werkzeug>=0.5
+  Using cached Werkzeug-2.1.2-py3-none-any.whl (224 kB)
+Requirement already satisfied: importlib-metadata in ./todo-list-aws/lib/python3.7/site-packages (from moto) (4.2.0)
+Requirement already satisfied: s3transfer<0.7.0,>=0.6.0 in ./todo-list-aws/lib/python3.7/site-packages (from boto3>=1.9.201->moto) (0.6.0)
+Requirement already satisfied: jmespath<2.0.0,>=0.7.1 in ./todo-list-aws/lib/python3.7/site-packages (from boto3>=1.9.201->moto) (1.0.0)
+Requirement already satisfied: urllib3<1.27,>=1.25.4 in ./todo-list-aws/lib/python3.7/site-packages (from botocore>=1.12.201->moto) (1.26.9)
+Collecting cffi>=1.12
+  Using cached cffi-1.15.0-cp37-cp37m-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (427 kB)
+Requirement already satisfied: six>=1.5 in ./todo-list-aws/lib/python3.7/site-packages (from python-dateutil<3.0.0,>=2.1->moto) (1.16.0)
+Collecting idna<4,>=2.5
+  Using cached idna-3.3-py3-none-any.whl (61 kB)
+Collecting certifi>=2017.4.17
+  Using cached certifi-2022.5.18.1-py3-none-any.whl (155 kB)
+Collecting charset-normalizer~=2.0.0
+  Using cached charset_normalizer-2.0.12-py3-none-any.whl (39 kB)
+Requirement already satisfied: typing-extensions in ./todo-list-aws/lib/python3.7/site-packages (from responses>=0.9.0->moto) (4.2.0)
+Requirement already satisfied: zipp>=0.5 in ./todo-list-aws/lib/python3.7/site-packages (from importlib-metadata->moto) (3.8.0)
+Collecting pycparser
+  Using cached pycparser-2.21-py2.py3-none-any.whl (118 kB)
+Installing collected packages: pytz, xmltodict, werkzeug, pycparser, MarkupSafe, idna, charset-normalizer, certifi, requests, Jinja2, cffi, responses, cryptography, moto
+Successfully installed Jinja2-3.1.2 MarkupSafe-2.1.1 certifi-2022.5.18.1 cffi-1.15.0 charset-normalizer-2.0.12 cryptography-37.0.2 idna-3.3 moto-3.1.12 pycparser-2.21 pytz-2022.1 requests-2.27.1 responses-0.21.0 werkzeug-2.1.2 xmltodict-0.13.0
++ python -m pip install mock==4.0.2
+Collecting mock==4.0.2
+  Using cached mock-4.0.2-py3-none-any.whl (28 kB)
+Installing collected packages: mock
+Successfully installed mock-4.0.2
++ python -m pip install coverage==4.5.4
+Collecting coverage==4.5.4
+  Using cached coverage-4.5.4-cp37-cp37m-manylinux1_x86_64.whl (205 kB)
+Installing collected packages: coverage
+Successfully installed coverage-4.5.4
++ pwd
+/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] echo
+Static program analysis:
+[Pipeline] sh
++ bash pipelines/PIPELINE-FULL-STAGING/static_test.sh
+++ wc -l
+++ radon cc src -nc
++ RAD_ERRORS=0
++ [[ 0 -ne 0 ]]
+++ wc -l
+++ radon mi src -nc
++ RAD_ERRORS=0
++ [[ 0 -ne 0 ]]
++ flake8 src/__init__.py src/create.py src/decimalencoder.py src/delete.py src/get.py src/list.py src/todoList.py src/update.py
++ [[ 0 -ne 0 ]]
++ bandit src/__init__.py src/create.py src/decimalencoder.py src/delete.py src/get.py src/list.py src/todoList.py src/update.py
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	running on Python 3.7.5
+Run started:2022-06-09 06:31:33.526906
+
+Test results:
+	No issues identified.
+
+Code scanned:
+	Total lines of code: 211
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 0
+Files skipped (0):
++ [[ 0 -ne 0 ]]
+[Pipeline] echo
+Unit testing:
+[Pipeline] sh
++ bash pipelines/PIPELINE-FULL-STAGING/unit_test.sh
+++ pwd
++ export PYTHONPATH=:/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING
++ PYTHONPATH=:/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING
++ echo 'PYTHONPATH: :/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING'
+PYTHONPATH: :/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING
++ export DYNAMODB_TABLE=todoUnitTestsTable
++ DYNAMODB_TABLE=todoUnitTestsTable
++ python test/unit/TestToDo.py
+EEEEEEEEEEEEEEEEEEEE
+======================================================================
+ERROR: test_create_table_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 98, in test_create_table_error
+    tableName = create_todo_table(self.dynamodb);
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/src/todoList.py", line 158, in create_todo_table
+    return table
+UnboundLocalError: local variable 'table' referenced before assignment
+
+======================================================================
+ERROR: test_create_table_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_delete_todo (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_delete_todo_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 278, in test_delete_todo_error
+    self.assertRaises(Exception, delete_item("", self.dynamodb))
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/src/todoList.py", line 114, in delete_item
+    table = get_table(dynamodb)
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/src/todoList.py", line 13, in get_table
+    URL = os.environ['ENDPOINT_OVERRIDE']
+  File "/usr/lib/python3.7/os.py", line 679, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'ENDPOINT_OVERRIDE'
+
+======================================================================
+ERROR: test_delete_todo_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_get_table_name_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 112, in test_get_table_name_error
+    tableName = os.environ[''];
+  File "/usr/lib/python3.7/os.py", line 679, in __getitem__
+    raise KeyError(key) from None
+KeyError: ''
+
+======================================================================
+ERROR: test_get_table_name_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_get_todo (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 166, in test_get_todo
+    responseGet['text'])
+TypeError: 'NoneType' object is not subscriptable
+
+======================================================================
+ERROR: test_get_todo (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_list_todo (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 185, in test_list_todo
+    self.assertRaises(Exception, get_item())
+TypeError: get_item() missing 1 required positional argument: 'key'
+
+======================================================================
+ERROR: test_list_todo (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_put_todo (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_put_todo_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 142, in test_put_todo_error
+    self.assertRaises(Exception, put_item("", dynamodb=None))
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/src/todoList.py", line 62, in put_item
+    table = get_table(dynamodb)
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/src/todoList.py", line 13, in get_table
+    URL = os.environ['ENDPOINT_OVERRIDE']
+  File "/usr/lib/python3.7/os.py", line 679, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'ENDPOINT_OVERRIDE'
+
+======================================================================
+ERROR: test_put_todo_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_table_exists (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 70, in test_table_exists
+    self.assertRaises(Exception, self.table.name)
+AttributeError: 'NoneType' object has no attribute 'name'
+
+======================================================================
+ERROR: test_table_exists (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_table_exists_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 85, in test_table_exists_error
+    self.assertRaises(Exception, get_table("Polo"))
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/src/todoList.py", line 26, in get_table
+    table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
+AttributeError: 'str' object has no attribute 'Table'
+
+======================================================================
+ERROR: test_table_exists_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_update_todo (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_update_todo_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+----------------------------------------------------------------------
+Ran 12 tests in 1.036s
+
+FAILED (errors=20)
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_create_table_error
+Creating Table with name:todoUnitTestsTable
+Resource in use
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_delete_todo
+Result getTable:todoUnitTestsTable
+Table name:todoUnitTestsTable
+Response PutItem{'statusCode': 200, 'body': '{"id": "ce7f9808-e7bd-11ec-94c4-1237ef0f98cf", "text": "Aprender DevOps y Cloud en la UNIR", "checked": false, "createdAt": "1654756294.0739818", "updatedAt": "1654756294.0739818"}'}
+Id item:ce7f9808-e7bd-11ec-94c4-1237ef0f98cf
+Result getTable:todoUnitTestsTable
+Item deleted succesfully
+Result getTable:todoUnitTestsTable
+Result getItem:{'Items': [], 'Count': 0, 'ScannedCount': 0, 'ResponseMetadata': {'RequestId': 'FC3I7TKZKVTLOP9US04CX6ZZEU0XQIKJ69D2MHQE06D1GX78P3F7', 'HTTPStatusCode': 200, 'HTTPHeaders': {'server': 'amazon.com', 'x-amzn-requestid': 'FC3I7TKZKVTLOP9US04CX6ZZEU0XQIKJ69D2MHQE06D1GX78P3F7', 'x-amz-crc32': '4237339094'}, 'RetryAttempts': 0}}
+Result getTable:todoUnitTestsTable
+End: test_delete_todo
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_delete_todo_error
+Result getTable:todoUnitTestsTable
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_get_table_name_error
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_get_todo
+Result getTable:todoUnitTestsTable
+Table name:todoUnitTestsTable
+Response put_item:{'statusCode': 200, 'body': '{"id": "ce7f9809-e7bd-11ec-94c4-1237ef0f98cf", "text": "Aprender DevOps y Cloud en la UNIR", "checked": false, "createdAt": "1654756294.362954", "updatedAt": "1654756294.362954"}'}
+Id item:ce7f9809-e7bd-11ec-94c4-1237ef0f98cf
+Result getTable:todoUnitTestsTable
+Result getItem:{'Item': {'id': 'ce7f9809-e7bd-11ec-94c4-1237ef0f98cf', 'text': 'Aprender DevOps y Cloud en la UNIR', 'checked': False, 'createdAt': '1654756294.362954', 'updatedAt': '1654756294.362954'}, 'ResponseMetadata': {'RequestId': 'HHC4KMJTZWURJXA84GZR676RJ5TBIUSVECNBFMS7K0MJX0BNB58N', 'HTTPStatusCode': 200, 'HTTPHeaders': {'server': 'amazon.com', 'x-amzn-requestid': 'HHC4KMJTZWURJXA84GZR676RJ5TBIUSVECNBFMS7K0MJX0BNB58N', 'x-amz-crc32': '512993922'}, 'RetryAttempts': 0}}
+Response Get:None
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_list_todo
+Result getTable:todoUnitTestsTable
+Table name:todoUnitTestsTable
+Result getTable:todoUnitTestsTable
+Result getItem:{'Items': [{'id': 'ce7f980a-e7bd-11ec-94c4-1237ef0f98cf', 'text': 'Aprender DevOps y Cloud en la UNIR', 'checked': False, 'createdAt': '1654756294.435259', 'updatedAt': '1654756294.435259'}], 'Count': 1, 'ScannedCount': 1, 'ResponseMetadata': {'RequestId': 'KDZKGW6T4IP601O55ULHKR8DPXXFFDW3YB8UVYA2OCBC8V94BVDZ', 'HTTPStatusCode': 200, 'HTTPHeaders': {'server': 'amazon.com', 'x-amzn-requestid': 'KDZKGW6T4IP601O55ULHKR8DPXXFFDW3YB8UVYA2OCBC8V94BVDZ', 'x-amz-crc32': '669121445'}, 'RetryAttempts': 0}}
+Response GetItems[{'id': 'ce7f980a-e7bd-11ec-94c4-1237ef0f98cf', 'text': 'Aprender DevOps y Cloud en la UNIR', 'checked': False, 'createdAt': '1654756294.435259', 'updatedAt': '1654756294.435259'}]
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_put_todo
+Result getTable:todoUnitTestsTable
+Table name:todoUnitTestsTable
+Response put_item:{'statusCode': 200, 'body': '{"id": "ce7f980b-e7bd-11ec-94c4-1237ef0f98cf", "text": "Aprender DevOps y Cloud en la UNIR", "checked": false, "createdAt": "1654756294.5063903", "updatedAt": "1654756294.5063903"}'}
+End: test_put_todo
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_put_todo_error
+Result getTable:todoUnitTestsTable
+Table name:todoUnitTestsTable
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_table_exists
+Table name:todoUnitTestsTable
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_table_exists_error
+Table name:todoUnitTestsTable
+Result getTable:todoUnitTestsTable
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_update_todo
+Result getTable:todoUnitTestsTable
+Table name:todoUnitTestsTable
+Response PutItem{'statusCode': 200, 'body': '{"id": "ce7f980d-e7bd-11ec-94c4-1237ef0f98cf", "text": "Aprender DevOps y Cloud en la UNIR", "checked": false, "createdAt": "1654756294.855271", "updatedAt": "1654756294.855271"}'}
+Id item:ce7f980d-e7bd-11ec-94c4-1237ef0f98cf
+Result getTable:todoUnitTestsTable
+Result Update Item:{'id': 'ce7f980d-e7bd-11ec-94c4-1237ef0f98cf', 'text': 'Aprender más cosas que DevOps y Cloud en la UNIR', 'checked': 'false', 'createdAt': '1654756294.855271', 'updatedAt': Decimal('1654756294858')}
+Result getTable:todoUnitTestsTable
+End: test_update_todo
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_update_todo_error
+Result getTable:todoUnitTestsTable
+Table name:todoUnitTestsTable
+Response PutItem{'statusCode': 200, 'body': '{"id": "ce7f980e-e7bd-11ec-94c4-1237ef0f98cf", "text": "Aprender DevOps y Cloud en la UNIR", "checked": false, "createdAt": "1654756294.9398444", "updatedAt": "1654756294.9398444"}'}
+Result getTable:todoUnitTestsTable
+Result getTable:todoUnitTestsTable
+Result getTable:todoUnitTestsTable
+End: test_update_todo_error
+---------------------
+Start: tearDown
++ pip show coverage
+Name: coverage
+Version: 4.5.4
+Summary: Code coverage measurement for Python
+Home-page: https://github.com/nedbat/coveragepy
+Author: Ned Batchelder and 100 others
+Author-email: ned@nedbatchelder.com
+License: Apache 2.0
+Location: /var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages
+Requires: 
+Required-by: 
++ coverage run --include=src/todoList.py test/unit/TestToDo.py
+EEEEEEEEEEEEEEEEEEEE
+======================================================================
+ERROR: test_create_table_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 98, in test_create_table_error
+    tableName = create_todo_table(self.dynamodb);
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/src/todoList.py", line 158, in create_todo_table
+    return table
+UnboundLocalError: local variable 'table' referenced before assignment
+
+======================================================================
+ERROR: test_create_table_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_delete_todo (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_delete_todo_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 278, in test_delete_todo_error
+    self.assertRaises(Exception, delete_item("", self.dynamodb))
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/src/todoList.py", line 114, in delete_item
+    table = get_table(dynamodb)
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/src/todoList.py", line 13, in get_table
+    URL = os.environ['ENDPOINT_OVERRIDE']
+  File "/usr/lib/python3.7/os.py", line 679, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'ENDPOINT_OVERRIDE'
+
+======================================================================
+ERROR: test_delete_todo_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_get_table_name_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 112, in test_get_table_name_error
+    tableName = os.environ[''];
+  File "/usr/lib/python3.7/os.py", line 679, in __getitem__
+    raise KeyError(key) from None
+KeyError: ''
+
+======================================================================
+ERROR: test_get_table_name_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_get_todo (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 166, in test_get_todo
+    responseGet['text'])
+TypeError: 'NoneType' object is not subscriptable
+
+======================================================================
+ERROR: test_get_todo (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_list_todo (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 185, in test_list_todo
+    self.assertRaises(Exception, get_item())
+TypeError: get_item() missing 1 required positional argument: 'key'
+
+======================================================================
+ERROR: test_list_todo (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_put_todo (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_put_todo_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 142, in test_put_todo_error
+    self.assertRaises(Exception, put_item("", dynamodb=None))
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/src/todoList.py", line 62, in put_item
+    table = get_table(dynamodb)
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/src/todoList.py", line 13, in get_table
+    URL = os.environ['ENDPOINT_OVERRIDE']
+  File "/usr/lib/python3.7/os.py", line 679, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'ENDPOINT_OVERRIDE'
+
+======================================================================
+ERROR: test_put_todo_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_table_exists (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 70, in test_table_exists
+    self.assertRaises(Exception, self.table.name)
+AttributeError: 'NoneType' object has no attribute 'name'
+
+======================================================================
+ERROR: test_table_exists (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_table_exists_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 85, in test_table_exists_error
+    self.assertRaises(Exception, get_table("Polo"))
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/src/todoList.py", line 26, in get_table
+    table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
+AttributeError: 'str' object has no attribute 'Table'
+
+======================================================================
+ERROR: test_table_exists_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_update_todo (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+======================================================================
+ERROR: test_update_todo_error (__main__.TestDatabaseFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/todo-list-aws/lib/python3.7/site-packages/moto/core/models.py", line 120, in wrapper
+    result = func(*args, **kwargs)
+  File "test/unit/TestToDo.py", line 49, in tearDown
+    self.assertIn(tableName, self.table.name)
+NameError: name 'tableName' is not defined
+
+----------------------------------------------------------------------
+Ran 12 tests in 1.271s
+
+FAILED (errors=20)
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_create_table_error
+Creating Table with name:todoUnitTestsTable
+Resource in use
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_delete_todo
+Result getTable:todoUnitTestsTable
+Table name:todoUnitTestsTable
+Response PutItem{'statusCode': 200, 'body': '{"id": "cfeeac06-e7bd-11ec-94c4-1237ef0f98cf", "text": "Aprender DevOps y Cloud en la UNIR", "checked": false, "createdAt": "1654756296.4928396", "updatedAt": "1654756296.4928396"}'}
+Id item:cfeeac06-e7bd-11ec-94c4-1237ef0f98cf
+Result getTable:todoUnitTestsTable
+Item deleted succesfully
+Result getTable:todoUnitTestsTable
+Result getItem:{'Items': [], 'Count': 0, 'ScannedCount': 0, 'ResponseMetadata': {'RequestId': 'EHC6B1MUMS5M0DAYKANOF9AKL1IFG23555KZ7XSB0HQFPRKQTN4T', 'HTTPStatusCode': 200, 'HTTPHeaders': {'server': 'amazon.com', 'x-amzn-requestid': 'EHC6B1MUMS5M0DAYKANOF9AKL1IFG23555KZ7XSB0HQFPRKQTN4T', 'x-amz-crc32': '4237339094'}, 'RetryAttempts': 0}}
+Result getTable:todoUnitTestsTable
+End: test_delete_todo
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_delete_todo_error
+Result getTable:todoUnitTestsTable
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_get_table_name_error
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_get_todo
+Result getTable:todoUnitTestsTable
+Table name:todoUnitTestsTable
+Response put_item:{'statusCode': 200, 'body': '{"id": "cfeeac07-e7bd-11ec-94c4-1237ef0f98cf", "text": "Aprender DevOps y Cloud en la UNIR", "checked": false, "createdAt": "1654756296.8293574", "updatedAt": "1654756296.8293574"}'}
+Id item:cfeeac07-e7bd-11ec-94c4-1237ef0f98cf
+Result getTable:todoUnitTestsTable
+Result getItem:{'Item': {'id': 'cfeeac07-e7bd-11ec-94c4-1237ef0f98cf', 'text': 'Aprender DevOps y Cloud en la UNIR', 'checked': False, 'createdAt': '1654756296.8293574', 'updatedAt': '1654756296.8293574'}, 'ResponseMetadata': {'RequestId': 'PUT5H5G66ZRVLZNBH7BGDH02I7IB13BSHSN16K2H5FNAORTF8J60', 'HTTPStatusCode': 200, 'HTTPHeaders': {'server': 'amazon.com', 'x-amzn-requestid': 'PUT5H5G66ZRVLZNBH7BGDH02I7IB13BSHSN16K2H5FNAORTF8J60', 'x-amz-crc32': '194176704'}, 'RetryAttempts': 0}}
+Response Get:None
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_list_todo
+Result getTable:todoUnitTestsTable
+Table name:todoUnitTestsTable
+Result getTable:todoUnitTestsTable
+Result getItem:{'Items': [{'id': 'cfeeac08-e7bd-11ec-94c4-1237ef0f98cf', 'text': 'Aprender DevOps y Cloud en la UNIR', 'checked': False, 'createdAt': '1654756296.919534', 'updatedAt': '1654756296.919534'}], 'Count': 1, 'ScannedCount': 1, 'ResponseMetadata': {'RequestId': 'XFB6RJ6CT782L6HSPN66AU1AFWKWZO97LRFYFGIG2TF1390PHXPB', 'HTTPStatusCode': 200, 'HTTPHeaders': {'server': 'amazon.com', 'x-amzn-requestid': 'XFB6RJ6CT782L6HSPN66AU1AFWKWZO97LRFYFGIG2TF1390PHXPB', 'x-amz-crc32': '1111269525'}, 'RetryAttempts': 0}}
+Response GetItems[{'id': 'cfeeac08-e7bd-11ec-94c4-1237ef0f98cf', 'text': 'Aprender DevOps y Cloud en la UNIR', 'checked': False, 'createdAt': '1654756296.919534', 'updatedAt': '1654756296.919534'}]
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_put_todo
+Result getTable:todoUnitTestsTable
+Table name:todoUnitTestsTable
+Response put_item:{'statusCode': 200, 'body': '{"id": "cfeeac09-e7bd-11ec-94c4-1237ef0f98cf", "text": "Aprender DevOps y Cloud en la UNIR", "checked": false, "createdAt": "1654756297.0149896", "updatedAt": "1654756297.0149896"}'}
+End: test_put_todo
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_put_todo_error
+Result getTable:todoUnitTestsTable
+Table name:todoUnitTestsTable
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_table_exists
+Table name:todoUnitTestsTable
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_table_exists_error
+Table name:todoUnitTestsTable
+Result getTable:todoUnitTestsTable
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_update_todo
+Result getTable:todoUnitTestsTable
+Table name:todoUnitTestsTable
+Response PutItem{'statusCode': 200, 'body': '{"id": "cfeeac0b-e7bd-11ec-94c4-1237ef0f98cf", "text": "Aprender DevOps y Cloud en la UNIR", "checked": false, "createdAt": "1654756297.4368148", "updatedAt": "1654756297.4368148"}'}
+Id item:cfeeac0b-e7bd-11ec-94c4-1237ef0f98cf
+Result getTable:todoUnitTestsTable
+Result Update Item:{'id': 'cfeeac0b-e7bd-11ec-94c4-1237ef0f98cf', 'text': 'Aprender más cosas que DevOps y Cloud en la UNIR', 'checked': 'false', 'createdAt': '1654756297.4368148', 'updatedAt': Decimal('1654756297440')}
+Result getTable:todoUnitTestsTable
+End: test_update_todo
+---------------------
+Start: tearDown
+---------------------
+Start: setUp
+Creating Table with name:todoUnitTestsTable
+Result getItem:todoUnitTestsTable
+End: setUp
+---------------------
+Start: test_update_todo_error
+Result getTable:todoUnitTestsTable
+Table name:todoUnitTestsTable
+Response PutItem{'statusCode': 200, 'body': '{"id": "cfeeac0c-e7bd-11ec-94c4-1237ef0f98cf", "text": "Aprender DevOps y Cloud en la UNIR", "checked": false, "createdAt": "1654756297.5409129", "updatedAt": "1654756297.5409129"}'}
+Result getTable:todoUnitTestsTable
+Result getTable:todoUnitTestsTable
+Result getTable:todoUnitTestsTable
+End: test_update_todo_error
+---------------------
+Start: tearDown
++ coverage report
+Name              Stmts   Miss  Cover
+-------------------------------------
+src/todoList.py      75     15    80%
++ coverage xml
+Post stage
+[Pipeline] script
+[Pipeline] {
+[Pipeline] publishCoverage
+Publishing Coverage report....
+A total of 1 reports were found
+Report coverage diff: 0.0%. Add to CoverageResult.
+Group coverage diff: 0.0%. Add to CoverageResult.
+Package coverage diff: 0.0%. Add to CoverageResult.
+File coverage diff: 0.0%. Add to CoverageResult.
+Class coverage diff: 0.0%. Add to CoverageResult.
+Line coverage diff: 0.0%. Add to CoverageResult.
+[Coverage] Computing coverage delta report
+[Coverage] Reference build recorder is not configured
+[Coverage] -> No reference build defined, falling back to previous build
+[Coverage] -> Found reference result 'io.jenkins.plugins.coverage.CoverageAction@2b26a3fd'
+[Checks API] No suitable checks publisher found.
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] echo
+Package sam application:
+[Pipeline] sh
++ bash pipelines/common-steps/build.sh
++ sam validate --region us-east-1
+2022-06-09 06:31:39 Loading policies from IAM...
+2022-06-09 06:31:39 Finished loading policies from IAM.
+/var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/template.yaml is a valid SAM Template
++ sam build
+Building codeuri: /var/lib/jenkins/workspace/PIPELINE-FULL-STAGING/src runtime: python3.7 metadata: {} architecture: x86_64 functions: ['CreateTodoFunction', 'ListTodosFunction', 'GetTodoFunction', 'UpdateTodoFunction', 'DeleteTodoFunction']
+Running PythonPipBuilder:ResolveDependencies
+Running PythonPipBuilder:CopySource
+
+Build Succeeded
+
+Built Artifacts  : .aws-sam/build
+Built Template   : .aws-sam/build/template.yaml
+
+Commands you can use next
+=========================
+[*] Invoke Function: sam local invoke
+[*] Deploy: sam deploy --guided
+    
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] echo
+Initiating Deployment
+[Pipeline] sh
++ bash pipelines/common-steps/deploy.sh
++ du -hs CHANGELOG.md README.md coverage.xml localEnvironment.json pipelines pytest.ini samconfig.toml src template.yaml test todo-list-aws
++ sort -h
+4.0K	CHANGELOG.md
+4.0K	coverage.xml
+4.0K	localEnvironment.json
+4.0K	pytest.ini
+4.0K	samconfig.toml
+8.0K	README.md
+8.0K	template.yaml
+32K	test
+52K	src
+60K	pipelines
+162M	todo-list-aws
++ sam deploy template.yaml --config-env staging --no-confirm-changeset --force-upload --no-fail-on-empty-changeset --no-progressbar
+
+	Deploying with following values
+	===============================
+	Stack name                   : todo-list-aws-staging
+	Region                       : us-east-1
+	Confirm changeset            : False
+	Deployment s3 bucket         : unir-cp1-s3-staging
+	Capabilities                 : ["CAPABILITY_IAM"]
+	Parameter overrides          : {"Stage": "staging"}
+	Signing Profiles             : {}
+
+Initiating deployment
+=====================
+
+Waiting for changeset to be created..
+No changes to deploy. Stack todo-list-aws-staging is up to date
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Integration Test after deploy)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ aws cloudformation describe-stacks --stack-name todo-list-aws-staging --query Stacks[0].Outputs[?OutputKey==`BaseUrlApi`].OutputValue --region us-east-1 --output text
+[Pipeline] echo
+https://p9zlryqp9d.execute-api.us-east-1.amazonaws.com/Prod
+
+[Pipeline] echo
+Initiating Integration Tests
+[Pipeline] sh
++ bash pipelines/common-steps/integration.sh https://p9zlryqp9d.execute-api.us-east-1.amazonaws.com/Prod
++ export BASE_URL=https://p9zlryqp9d.execute-api.us-east-1.amazonaws.com/Prod
++ BASE_URL=https://p9zlryqp9d.execute-api.us-east-1.amazonaws.com/Prod
++ pytest -s test/integration/todoApiTest.py
+============================= test session starts ==============================
+platform linux -- Python 3.7.5, pytest-7.1.2, pluggy-1.0.0
+rootdir: /var/lib/jenkins/workspace/PIPELINE-FULL-STAGING, configfile: pytest.ini
+collected 5 items
+
+test/integration/todoApiTest.py ---------------------------------------
+Starting - integration test Add TODO
+Response Add Todo: {"id": "daa0f1ea-e7bd-11ec-8e76-2e84ade2e6c4", "text": "Integration text example", "checked": false, "createdAt": "1654756314.3061209", "updatedAt": "1654756314.3061209"}
+ID todo:daa0f1ea-e7bd-11ec-8e76-2e84ade2e6c4
+End - integration test Add TODO
+.---------------------------------------
+Starting - integration test Delete TODO
+Response Add todo: {"id": "dc251474-e7bd-11ec-8e76-2e84ade2e6c4", "text": "Integration text example - Initial", "checked": false, "createdAt": "1654756316.989385", "updatedAt": "1654756316.989385"}
+ID todo:dc251474-e7bd-11ec-8e76-2e84ade2e6c4
+Response Delete Todo:<Response [200]>
+Response Get Todo https://gnx01c4xy3.execute-api.us-east-1.amazonaws.com/Prod/todos/dc251474-e7bd-11ec-8e76-2e84ade2e6c4: <Response [404]>
+End - integration test Delete TODO
+.---------------------------------------
+Starting - integration test Get TODO
+Response Add Todo: {'statusCode': 200, 'body': '{"id": "ddc70dfa-e7bd-11ec-8e76-2e84ade2e6c4", "text": "Integration text example - GET", "checked": false, "createdAt": "1654756319.7286367", "updatedAt": "1654756319.7286367"}'}
+ID todo:ddc70dfa-e7bd-11ec-8e76-2e84ade2e6c4
+Response Get Todo: {'checked': False, 'createdAt': '1654756319.7286367', 'text': 'Integration text example - GET', 'id': 'ddc70dfa-e7bd-11ec-8e76-2e84ade2e6c4', 'updatedAt': '1654756319.7286367'}
+End - integration test Get TODO
+.---------------------------------------
+***************************************
+Starting - integration test List TODO
+Response Add Todo: {'statusCode': 200, 'body': '{"id": "de4d3a7e-e7bd-11ec-8e76-2e84ade2e6c4", "text": "Integration text example", "checked": false, "createdAt": "1654756320.607956", "updatedAt": "1654756320.607956"}'}
+ID todo:de4d3a7e-e7bd-11ec-8e76-2e84ade2e6c4
+Response List Todo:[{'checked': False, 'createdAt': '1654755766.3582363', 'text': 'Integration text example', 'id': '93f16eb0-e7bc-11ec-b7ce-9a896cc36c52', 'updatedAt': '1654755766.3582363'}, {'checked': False, 'createdAt': '1654572668.115402', 'text': 'Integration text example', 'id': '44e2c89c-e612-11ec-b3f7-a6dc5f049af6', 'updatedAt': '1654572668.115402'}, {'checked': False, 'createdAt': '1654755532.3373883', 'text': 'Integration text example', 'id': '087a432a-e7bc-11ec-b7ce-9a896cc36c52', 'updatedAt': '1654755532.3373883'}, {'checked': False, 'createdAt': '1654564401.7276838', 'text': 'Integration text example', 'id': '05bc1da2-e5ff-11ec-94e2-1ab1caa2edd0', 'updatedAt': '1654564401.7276838'}, {'checked': False, 'createdAt': '1654567914.712872', 'text': 'Integration text example', 'id': '33a31d94-e607-11ec-bc99-de16962ed7b6', 'updatedAt': '1654567914.712872'}, {'checked': False, 'createdAt': '1654665697.2774382', 'text': 'Integration text example', 'id': 'de966402-e6ea-11ec-adac-42473bf11a92', 'updatedAt': '1654665697.2774382'}, {'checked': False, 'createdAt': '1654665546.4798481', 'text': 'Integration text example', 'id': '84ba0092-e6ea-11ec-adac-42473bf11a92', 'updatedAt': '1654665546.4798481'}, {'checked': False, 'createdAt': '1654756320.607956', 'text': 'Integration text example', 'id': 'de4d3a7e-e7bd-11ec-8e76-2e84ade2e6c4', 'updatedAt': '1654756320.607956'}, {'checked': False, 'createdAt': '1654755582.7553704', 'text': 'Integration text example', 'id': '2681dc16-e7bc-11ec-b7ce-9a896cc36c52', 'updatedAt': '1654755582.7553704'}]
+End - integration test List TODO
+.---------------------------------------
+Starting - integration test Update TODO
+Response Add todo: {"id": "dfe2f72a-e7bd-11ec-8e76-2e84ade2e6c4", "text": "Integration text example - Initial", "checked": false, "createdAt": "1654756323.2669892", "updatedAt": "1654756323.2669892"}
+ID todo:dfe2f72a-e7bd-11ec-8e76-2e84ade2e6c4
+Response Update todo: {'checked': 'true', 'createdAt': '1654756323.2669892', 'text': 'Integration text example - Modified', 'id': 'dfe2f72a-e7bd-11ec-8e76-2e84ade2e6c4', 'updatedAt': 1654756325530}
+Response Get Todo: {'checked': 'true', 'createdAt': '1654756323.2669892', 'text': 'Integration text example - Modified', 'id': 'dfe2f72a-e7bd-11ec-8e76-2e84ade2e6c4', 'updatedAt': 1654756325530}
+End - integration test Update TODO
+.
+
+============================== 5 passed in 14.20s ==============================
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+Clean env: delete dir
+[Pipeline] cleanWs
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is used...
+[WS-CLEANUP] done
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
+REST API
+Jenkins 2.332.3
