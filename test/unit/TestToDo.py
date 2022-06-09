@@ -46,6 +46,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         """Delete mock database and table after test is run"""
         try:
             self.table=None
+            self.assertIn(tableName, self.table.name)
             self.assertRaises(Exception, self.table.delete())
         except ClientError as e:
             print(e.response['Error']['Message'])
@@ -273,6 +274,8 @@ class TestDatabaseFunctions(unittest.TestCase):
 
             # Testing file functions
             self.assertRaises(TypeError, delete_item("", self.dynamodb))
+            self.dynamodb=None
+            self.assertRaises(Exception, delete_item("", self.dynamodb))
         except ClientError as e:
             print(e.response['Error']['Message'])
         print ('End: test_delete_todo_error')
