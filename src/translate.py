@@ -16,10 +16,12 @@ def isLatin(textoTraducido):
 
 
 def translate(event, context):
-    translate = boto3.client(service_name='translate', region_name='us-east-1', use_ssl=True)
-    
-    if (event['pathParameters']['language']!=''):
-        langTarget=Text = event['pathParameters']['language']
+    translate = boto3.client(service_name='translate',
+                             region_name='us-east-1',
+                             use_ssl=True)
+
+    if (event['pathParameters']['language']! = ''):
+        langTarget = event['pathParameters']['language']
     else:
         langTarget = "en"
 
