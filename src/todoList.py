@@ -46,15 +46,9 @@ def get_item(key, dynamodb=None):
         result['Item']
 
 
-def translate(key, dynamodb=None):
+def translate(text):
     try:
-        table = get_table(dynamodb)
-        result = table.get_item(
-            Key={
-                'id': key
-            }
-        )
-        textoTraducido=translate(result['Item']['text'])        
+        textoTraducido=translate(text)        
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
