@@ -93,8 +93,8 @@ class TestDatabaseFunctions(unittest.TestCase):
         print('Table name:' + self.table.name)
         try:
             from src.todoList import translate
-            self.assertRaises(Exception, translate("Hola que tal"))
-            self.assertRaises(Exception, translate(None))
+            self.assertRaises(Exception, translate(self.uuid, "es"))
+            self.assertRaises(Exception, translate(None, None))
         except ClientError as e:
             print(e.response['Error']['Message'])        
         print ('End: test_translate_error')        
