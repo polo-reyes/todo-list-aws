@@ -87,7 +87,18 @@ class TestDatabaseFunctions(unittest.TestCase):
             print(e.response['Error']['Message'])        
         print ('End: test_table_exists_error')
         
-    
+    def test_translate_error(self):
+        print ('---------------------')
+        print ('Start: test_translate_error')
+        print('Table name:' + self.table.name)
+        try:
+            from src.todoList import translate
+            self.assertRaises(Exception, translate("Hola que tal"))
+            self.assertRaises(Exception, translate(None))
+        except ClientError as e:
+            print(e.response['Error']['Message'])        
+        print ('End: test_translate_error')        
+        
     def test_create_table_error(self):
         print ('---------------------')
         print ('Start: test_create_table_error')
